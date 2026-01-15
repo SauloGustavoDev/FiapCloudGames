@@ -5,8 +5,6 @@ using Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using Tests.Domain.Helper;
 using Xunit;
 
 namespace Tests.Infrastructure.Repository;

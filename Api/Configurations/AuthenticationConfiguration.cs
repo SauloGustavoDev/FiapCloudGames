@@ -22,7 +22,7 @@ namespace Api.Configurations
                         ValidateAudience = true,
                         ValidateIssuerSigningKey = true,
                         ValidateLifetime = true,
-                        RoleClaimType = ClaimTypes.Role, // ⚠️ ESSENCIAL
+                        RoleClaimType = ClaimTypes.Role,
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(jwtKey)),
                         ValidIssuer = configuration["JwtSettings:Issuer"],
