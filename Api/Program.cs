@@ -25,6 +25,10 @@ builder.Services.AddAuthenticationConfiguration(builder.Configuration);
 builder.Services.AddCorsConfiguration();
 #endregion
 
+#region Logging
+builder.AddLoggingConfiguration();
+#endregion
+
 var app = builder.Build();
 app.UseCorsConfiguration();
 app.UseSwaggerConfiguration();

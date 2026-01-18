@@ -23,12 +23,7 @@ namespace Api.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao processar requisição {@Method} {@Path} {@TraceId}",
-                context.Request.Method,
-                context.Request.Path,
-                context.TraceIdentifier);
-
-                context.Response.ContentType = "application/json";
+                LogException(context, ex);
 
                 var result = new
                 {
@@ -64,6 +59,34 @@ namespace Api.Middlewares
             var jsonResponse = JsonConvert.SerializeObject(response);
 
             return context.Response.WriteAsync(jsonResponse);
+        }
+
+        private void LogException(HttpContext context, Exception ex)
+        {
+            var path = context.Request.Path.Value;
+            var method = context.Request.Method;
+            var traceId = context.TraceIdentifier;
+
+            // Exceções de domínio → Warning
+            if (ex is CustomException || ex is ArgumentException)
+            {
+                _logger.LogWarning(
+                    "Falha de negócio em {Method} {Path}. Motivo: {Message}. TraceId={TraceId}",
+                    method,
+                    path,
+                    ex.Message,
+                    traceId
+                );
+                return;
+            }
+
+            // Exceções técnicas → Error (sem stack trace no log principal)
+            _logger.LogError(
+                "Erro interno em {Method} {Path}. TraceId={TraceId}",
+                method,
+                path,
+                traceId
+            );
         }
     }
 }

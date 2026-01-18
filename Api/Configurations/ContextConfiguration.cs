@@ -17,7 +17,8 @@ namespace Api.Configurations
 
             services.AddIdentity<User, IdentityRole>(options =>
             {
-                options.Password.RequiredLength = 8; // ajuste se quiser
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = false; // ajuste se quiser
             })
                 .AddEntityFrameworkStores<ContextDb>()
                 .AddDefaultTokenProviders();
